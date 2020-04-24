@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="MiniSudoCalc"/>
+  <qresource prefix="tb">
+    <file>Resources/images/del.png</file>
+  </qresource>
+</RCC>
