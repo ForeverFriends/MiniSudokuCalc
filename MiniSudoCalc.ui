@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MiniSudoCalcClass</class>
- <widget class="QWidget" name="MiniSudoCalcClass">
+ <class>MiniSudokuCalcClass</class>
+ <widget class="QWidget" name="MiniSudokuCalcClass">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MiniSudoCalc</string>
+   <string>MiniSudokuCalc</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -148,7 +148,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pClear">
+      <widget class="QPushButton" name="pDel">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -176,7 +176,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pDel">
+      <widget class="QPushButton" name="pClear">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>

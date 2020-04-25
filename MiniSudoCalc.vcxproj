@@ -84,10 +84,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MiniSudoCalc.cpp" />
+    <ClCompile Include="MiniSudokuCalc.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="MiniSudoCalc.h" />
+    <QtMoc Include="MiniSudokuCalc.h" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="MiniSudoCalc.ui" />

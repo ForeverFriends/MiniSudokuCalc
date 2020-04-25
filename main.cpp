@@ -1,4 +1,4 @@
-#include "MiniSudoCalc.h"
+#include "MiniSudokuCalc.h"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
