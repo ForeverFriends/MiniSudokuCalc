@@ -10,6 +10,7 @@ MiniSudoCalc::MiniSudoCalc(QWidget* parent)
 	m_bShowAnimation(false)
 {
 	ui.setupUi(this);
+	this->setWindowIcon(QIcon(":/prefix/Resources/images/SudokuCalc.jpg"));
 	ui.pSudoWnd->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	ui.pSudoWnd->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 	for (int row = 0; row < G_SizeNum; ++row)
@@ -53,8 +54,15 @@ void MiniSudoCalc::onClearBtnClicked()
 
 void MiniSudoCalc::onStartBtnClicked()
 {
+	// 检查当前选中的Item是否有存入数组中
+	QTableWidgetItem* curItem = ui.pSudoWnd->currentItem();
+	if (curItem != nullptr && !curItem->text().isEmpty())
+	{
+		onCurrentItemChanged(curItem, curItem);
+	}
 	m_bStartAutoCalc = true;
 	setBtnEnable(false);
+	// 校验数值是否符合要求
 	for (int row = 0; row < G_SizeNum; ++row)
 	{
 		for (int col = 0; col < G_SizeNum; ++col)
@@ -72,7 +80,7 @@ void MiniSudoCalc::onStartBtnClicked()
 	}
 	if (backTrack(0, 0) &&!m_bShowAnimation)
 	{
-		
+		// 未勾选动画，在计算完成后刷新界面
 		for (int row = 0; row < G_SizeNum; ++row)
 		{
 			for (int col = 0; col < G_SizeNum; col++)
@@ -156,48 +164,42 @@ bool MiniSudoCalc::backTrack(int row, int col)
 	{
 		return true;
 	}
-	for (int i = row; i < G_SizeNum; ++i)
+
+	if (m_nArrayDate[row][col] != 0)
 	{
-		for (int j = col; j < G_SizeNum; j++)
+		return backTrack(row, col + 1);
+	}
+	for (int num = 1; num <= G_SizeNum; ++num)
+	{
+		if (isValidNum(num, row, col))
 		{
-			if (m_nArrayDate[i][j] != 0)
+			m_nArrayDate[row][col] = num;
+			if (m_bShowAnimation)
 			{
-				return backTrack(i, j + 1);
-			}
-			for (int num = 1; num <= G_SizeNum; ++num)
-			{
-				if (isValidNum(num, i, j))
+				ui.pSudoWnd->item(row, col)->setText(QString::number(num));
+				ui.pSudoWnd->setCurrentItem(ui.pSudoWnd->item(row, col));
+				// 延时显示，便于查看界面
+				QTime time;
+				time.start();
+				while (time.elapsed() < 100)
 				{
-					m_nArrayDate[i][j] = num;
-					if (m_bShowAnimation)
-					{
-						ui.pSudoWnd->item(i, j)->setText(QString::number(num));
-						ui.pSudoWnd->setCurrentItem(ui.pSudoWnd->item(i, j));
-						// 延时显示，便于查看界面
-						QTime time;
-						time.start();
-						while (time.elapsed() < 100)
-						{
-							QCoreApplication::processEvents();
-						}
-					}
-					if (backTrack(i, j + 1))
-					{
-						return true;
-					}
-					m_nArrayDate[i][j] = 0;
-					if (m_bShowAnimation)
-					{
-						ui.pSudoWnd->item(i, j)->setText(QString(""));
-						ui.pSudoWnd->setCurrentItem(ui.pSudoWnd->item(i, j));
-					}
+					QCoreApplication::processEvents();
 				}
 			}
-			return false;
+			if (backTrack(row, col + 1))
+			{
+				return true;
+			}
+			m_nArrayDate[row][col] = 0;
+			if (m_bShowAnimation)
+			{
+				ui.pSudoWnd->item(row, col)->setText(QString(""));
+				ui.pSudoWnd->setCurrentItem(ui.pSudoWnd->item(row , col));
+			}
 		}
 	}
-
 	return false;
+
 }
 
 void MiniSudoCalc::setBtnEnable(bool enable)

@@ -1,6 +1,5 @@
 <RCC>
-  <qresource prefix="MiniSudoCalc"/>
-  <qresource prefix="tb">
-    <file>Resources/images/del.png</file>
-  </qresource>
+    <qresource prefix="/prefix">
+        <file>Resources/images/SudokuCalc.jpg</file>
+    </qresource>
 </RCC>
